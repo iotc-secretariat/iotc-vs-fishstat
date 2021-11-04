@@ -2,8 +2,8 @@
 # READ ####
 
 #library(iotc.base.common.data)
-#NC_RAW  = NC_raw(years = 1950:2019, factorize_results = FALSE)[IS_IOTC_SPECIES == TRUE]
-NC_RAW = fread("../inputs/data/IOTC_NC_RAW.csv")
+NC_RAW  = NC_raw(years = 1950:2019, factorize_results = FALSE)[IS_IOTC_SPECIES == TRUE]
+#NC_RAW = fread("../inputs/data/IOTC_NC_RAW.csv")
 
 # CONSOLIDATE ####
 NC_RAW[SPECIES_CODE %in% c("AG03", "BXQ", "AG14"), `:=` (SPECIES_CODE = "BIL", SPECIES = "Marlins,sailfishes,etc. nei")]
