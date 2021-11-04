@@ -79,8 +79,6 @@ However, there are some large differences for some fleets, in particular for the
 TOTAL_FLEET_CATCH_NEGATIVE_FT
 ```
 
-\pagebreak 
-
 ```{r TableTotalFleetCatchPositive, tab.cap = "Total catch (t) of Indian Ocean tuna and tuna-like species by fleet as available in the FAO database of capture production statistics and in the IOTC nominal catch database for the period 1950-2019 for the fleets with FAO catch larger than IOTC catch"}
 TOTAL_FLEET_CATCH_POSITIVE_FT
 ```
