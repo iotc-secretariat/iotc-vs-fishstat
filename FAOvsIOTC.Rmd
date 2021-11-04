@@ -1,0 +1,134 @@
+---
+title: "Fisheries catches of tuna and tuna-like species in the Indian Ocean between FAO and IOTC databases"
+author: "Author: [IOTC Secretariat](mailto:IOTC-Secretariat@fao.org)" 
+output:
+  word_document2:
+    reference_docx: "templates/doc_template.docx"
+    number_sections: FALSE
+csl: iotc.csl
+bibliography: FAOvsIOTC.bib
+---
+
+```{r general_options, echo = FALSE}
+options(scipen = 100)
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  tidy = TRUE,
+  tidy.opts = list(width.cutoff = 60),
+  size = 'small',
+  
+  tab.cap.pre = "Table ",
+  tab.cap.sep = ". ",
+  tab.cap.style ='Table Caption',
+  
+  fig.cap.style = "Caption label",
+  fig.cap.pre = "Fig. ", 
+  fig.cap.sep = ". ",
+  
+  fig.width   = 8,
+  fig.height  = 4.5
+)
+
+knit_hooks$set(
+  inline = function(x) {
+    prettyNum(x, big.mark = "")
+  }
+)
+```
+
+# Introduction
+
+We compare the annual catch of tuna and tuna-like species from the database of capture production statistics of the Food and Agriculture Organisation (FAO) and the database of nominal catch of the Indian Ocean Tuna Commission (IOTC) to assess the consistency between the two data sources and identify potential discrepancies that could indicate issues in data management or reporting.
+
+# Materials & Methods
+
+Annual time series of catch in metric tons (t) of tuna and tuna-like species in the Indian Ocean were extracted from the FAO database of capture production statistics with the software [FishStatJ](https://www.fao.org/fishery/statistics/software/fishstatj/en) and from the [IOTC database of nominal catch](https://iotc.org/data/datasets) available as of October 2021.
+
+## FAO catch data {#faodata}
+
+FAO fisheries catch statistics are available for the period 1950-2019 by species item, country or territory, and FAO Major Fishing Area. Data on capture production available in FishStatJ are annually collated from relevant national offices concerned with fishery statistics, by means of a system of standardized forms (FISHSTAT NS-1) which aim to collect the annual retained catches from commercial, artisanal, subsistence, and recreational fisheries from marine and inland waters. Where officially reported national statistics are lacking or are considered unreliable, FAO makes estimates based on the best information available. When alternative sources of information are missing, the most recent officially reported data are repeated.
+
+Data were filtered to include the 16 tuna and tuna-like species occurring in the IOTC area of competence (i.e., FAO major Fishing Areas 51 (Western Indian Ocean) and 57 (Eastern Indian Ocean)) and under the IOTC mandate as well as the species aggregates that may include some of these species, e.g., frigate and bullet tunas combined together (**Table \@ref(tab:FAOSpeciesList)**).
+
+## IOTC catch data {#iotcdata}
+
+The IOTC data set contains retained catches (in live weight equivalent; t) of all tuna and tuna-like species, aggregated by year, FAO Major Fishing Area, species or species aggregate, and reporting country flag. Data are collated from IOTC contracting parties and cooperating non-contracting parties (CPCs) and generally reported to the IOTC Secretariat through [IOTC form 1RC](https://iotc.org/sites/default/files/documents/data/Form_1RC.zip). For some specific fisheries characterized by well-known, outstanding issues in terms of data quality, a process of re-estimation of species and/or gear composition may be performed based on data available from other years or areas, or by using proxy fleets, i.e., fleets occurring in the same strata which are assumed to have a very similar catch composition [e.g., @IOTC2018]. When nominal catches are not reported by a CPC as well as for all non-members of the IOTC, catch data from the previous year may be repeated or catches may be derived from a range of sources, including the FAO database of capture production statistic (see [FAO catch data](#faodata)).
+
+## Data comparison {#comparison}
+
+To compare the two data sets, some correspondence of the fields was performed for countries/territories and species items. First, the ISO 3166-1 (alpha-3) codes of the countries and territories included in the FAO data set (**Table \@ref(tab:FAOCountryList)**) were mapped with the fleets of the IOTC data set as those latter may differ from standard codes when they combine a CPC with a country (e.g., EU,Spain) or represent a group of countries (e.g., Soviet Union) (**Table \@ref(tab:MappingFAOCountriesIOTCFleets)**). In addition, catches of former Sudan and Zanzibar were assigned to Sudan (SDN) and Tanzania (TZA), respectively. Finally, the five NEI fleets used by the IOTC Secretariat to include some catches not accounted elsewhere were considered as a single NEI fleet to be compared with the "Other nei" country included in the FAO data set. Second, frigate tuna (FRI) and bullet tuna (BLT) were regrouped under the species group "Frigate and bullet tunas"" (FRZ) in both data sets as the catches for these two species were historically aggregated together as part of the FAO processing procedure. Similarly, catches of Indo-Pacific king mackerel (GUT) and narrow-barred Spanish mackerel (COM) were aggregated under the species group seerfishes (KGX) in each of the data sets.
+
+```{r MappingFAOCountriesIOTCFleets, tab.cap = "Correspondence between countries and territories included in the FAO data set and fleets included in the IOTC data set when those differ. NEI = not elsewhere included; SUN = Soviet Union"}
+MAPPING_COUNTRY_FLEET_FT
+```
+
+\pagebreak 
+
+# Results
+
+## Catch by fleet
+
+The total catches of tuna and tuna-like species available in the FAO and IOTC databases for the period 1950-2019 are `r pn(sum(NC_FAO$CATCH))` t  and `r pn(sum(NC_IOTC$CATCH))` t, respectively. It is to note that the small catches (728 t) reported to FAO by Honduras and Uruguay in the 2000s are not included in the IOTC database as the fisheries were not targeting tuna and tuna-like species. Overall, the total cumulative catches over the whole period are consistent for most countries, with an absolute difference of less than 10,000 t for `r TOTAL_FLEET_CATCH[!is.na(ABS_DIFFERENCE) & ABS_DIFFERENCE<10000, .N]` out of the `r TOTAL_FLEET_CATCH[, .N]` fleets considered in the study (**Tables \@ref(tab:TableTotalFleetCatchNegative)-\@ref(tab:TableTotalFleetCatchPositive)**).
+
+However, there are some large differences for some fleets, in particular for the group of NEI fleets for which the total catch available in the IOTC database exceeds the FAO catch by `r pn(TOTAL_FLEET_CATCH[FLEET_CODE == "NEI", ABS_DIFFERENCE])` t. The NEI fleets of the IOTC data set include some estimates of catches not reported to the IOTC Secretariat and may therefore not represent the same fleets [@Herrera2002]. As such, they will not be considered in the rest of the analysis. There are some substantially higher catches reported to the IOTC than to FAO for some fleets, in particular for Taiwan,China (`r pn(TOTAL_FLEET_CATCH[FLEET_CODE == "TWN", ABS_DIFFERENCE])` t), the Sultanate of Oman (`r pn(TOTAL_FLEET_CATCH[FLEET_CODE == "OMN", ABS_DIFFERENCE])` t), and Japan (`r pn(TOTAL_FLEET_CATCH[FLEET_CODE == "JPN", ABS_DIFFERENCE])` t) (**Table \@ref(tab:TableTotalFleetCatchNegative)**). There are also some fleets for which the total catch available in the FAO database exceed the catches reported to IOTC, e.g., Tanzania (`r pn(TOTAL_FLEET_CATCH[FLEET_CODE == "TZA", ABS_DIFFERENCE])` t) and Italy (`r pn(TOTAL_FLEET_CATCH[FLEET_CODE == "EUITA", ABS_DIFFERENCE])` t) (**Table \@ref(tab:TableTotalFleetCatchPositive)**).
+
+<!-- As the differences are reported for catches grouped across species, small differences in total catch might conceal some species-specific differences -->
+
+```{r TableTotalFleetCatchNegative, tab.cap = "Total catch (t) of Indian Ocean tuna and tuna-like species by fleet as available in the FAO database of capture production statistics and in the IOTC nominal catch database for the period 1950-2019 for the fleets with FAO catch smaller than IOTC catch"}
+TOTAL_FLEET_CATCH_NEGATIVE_FT
+```
+
+\pagebreak 
+
+```{r TableTotalFleetCatchPositive, tab.cap = "Total catch (t) of Indian Ocean tuna and tuna-like species by fleet as available in the FAO database of capture production statistics and in the IOTC nominal catch database for the period 1950-2019 for the fleets with FAO catch larger than IOTC catch"}
+TOTAL_FLEET_CATCH_POSITIVE_FT
+```
+
+\pagebreak 
+
+## Catch by species
+
+```{r TableTotalSpeciesCatch, tab.cap = "Total catch (t) of Indian Ocean tuna and tuna-like species by species as available in the FAO database of capture production statistics and in the IOTC nominal catch database for the period 1950-2019, excluding NEI fleets"}
+TOTAL_SPECIES_CATCH_FT
+```
+
+\pagebreak
+
+## Catch by year
+
+```{r PlotTotalYearCatch, fig.cap = "Total difference (t) by year between the catches of tuna and tuna-like species available in the FAO database of capture production statistics for the Indian Ocean and the IOTC nominal catch database for the period 1950-2019, excluding NEI fleets"}
+include_graphics("./outputs/charts/TOTAL_YEAR_CATCH_COMP_PLOT.png")
+```
+
+\pagebreak
+
+<!---BLOCK_LANDSCAPE_START--->
+
+## Catch by species and year
+
+```{r PlotYearSpeciesCatch, fig.cap = "Total difference (t) by year between the catches of each of the 16 IOTC tuna and tuna-like species available in the FAO database of capture production statistics for the Indian Ocean and the IOTC nominal catch database for the period 1950-2019, excluding NEI fleets"}
+include_graphics("./outputs/charts/YEAR_SPECIES_CATCH_COMP_PLOT.png")
+```
+
+<!---BLOCK_LANDSCAPE_STOP--->
+
+```{r PlotYearSpeciesAggregatesCatch, fig.cap = "Total difference (t) by year between the catches of aggregates of IOTC tuna and tuna-like species available in the FAO database of capture production statistics for the Indian Ocean and the IOTC nominal catch database for the period 1950-2019, excluding NEI fleets"}
+include_graphics("./outputs/charts/YEAR_SPECIES_AGGREGATES_CATCH_COMP_PLOT.png")
+```
+
+# Appendix
+
+```{r FAOSpeciesList, tab.cap = "List of species items included in the FAO data set of catch of tuna and tuna-like species in the Indian Ocean during 1950-2019"}
+FAO_SPECIES_LIST_FT
+```
+
+\pagebreak
+
+```{r FAOCountryList, tab.cap = "List of countries or territories included in the FAO data set of catch of tuna and tuna-like species in the Indian Ocean during 1950-2019"}
+FAO_COUNTRY_LIST_FT
+```      
+
+# References
+
+
