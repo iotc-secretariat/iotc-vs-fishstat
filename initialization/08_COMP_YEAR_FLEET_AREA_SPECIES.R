@@ -11,12 +11,20 @@ YEAR_FLEET_AREA_SPECIES_CATCH[, DIFFERENCE := FAO - IOTC]
 YEAR_FLEET_AREA_SPECIES_CATCH[, DESCRIPTION := factor(fifelse(DIFFERENCE >= 0, "FAO>IOTC", "FAO<IOTC"), levels = c("FAO>IOTC", "FAO<IOTC"))]
 setorderv(YEAR_FLEET_AREA_SPECIES_CATCH, cols = "DIFFERENCE")
 
-YFT_TOT_DIFF_2002_2019 = YEAR_FLEET_AREA_SPECIES_CATCH[YEAR %in% 2012:2019 & SPECIES_CODE == "YFT", .(TOT_DIFF = sum(abs(DIFFERENCE))), keyby = .(FLEET_CODE)][order(TOT_DIFF, decreasing = T)]
+# Assess differences by species
 
-SELECTED_FLEETS_FOR_PLOT = YFT_TOT_DIFF_2002_2019[TOT_DIFF>200]
+SpeciesList = sort(unique(NC_IOTC[IS_SPECIES_AGGREGATE == FALSE, SPECIES_CODE]))
+                          
+for (i in 1:length(SpeciesList)){
 
-YFT_YEAR_FLEET_COMP_PLOT_SELECTED_FLEETS =
- ggplot(data = YEAR_FLEET_AREA_SPECIES_CATCH[FLEET_CODE %in% SELECTED_FLEETS_FOR_PLOT$FLEET_CODE & YEAR>2011 & SPECIES_CODE == "YFT" & abs(DIFFERENCE)>0], aes(x = YEAR, y = DIFFERENCE / 1000, fill = DESCRIPTION)) +
+  SelectedSpecies = SpeciesList[i]
+
+SPECIES_TOT_DIFF_2002_2019 = YEAR_FLEET_AREA_SPECIES_CATCH[YEAR %in% 2012:2019 & SPECIES_CODE == SelectedSpecies, .(TOT_DIFF = sum(abs(DIFFERENCE))), keyby = .(FLEET_CODE)][order(TOT_DIFF, decreasing = T)]
+
+SELECTED_FLEETS_FOR_PLOT = SPECIES_TOT_DIFF_2002_2019[TOT_DIFF>200]
+
+YEAR_FLEET_COMP_PLOT_SELECTED_FLEETS =
+ ggplot(data = YEAR_FLEET_AREA_SPECIES_CATCH[FLEET_CODE %in% SELECTED_FLEETS_FOR_PLOT$FLEET_CODE & YEAR>2011 & SPECIES_CODE == SelectedSpecies & abs(DIFFERENCE)>0], aes(x = YEAR, y = DIFFERENCE / 1000, fill = DESCRIPTION)) +
   geom_col() +
   scale_color_manual(values = NC_DIFF_COLORS_FILL) +
   scale_fill_manual (values = NC_DIFF_COLORS_OUTLINE) +
@@ -31,7 +39,9 @@ YFT_YEAR_FLEET_COMP_PLOT_SELECTED_FLEETS =
   facet_grid(vars(FISHING_GROUND), vars(FLEET_CODE)) +
   theme(strip.text = element_text(size = 8), strip.background = element_rect(fill = "white"))
 
-ggsave("../outputs/charts/YFT_YEAR_FLEET_COMP_PLOT_SELECTED_FLEETS.png", YFT_YEAR_FLEET_COMP_PLOT_SELECTED_FLEETS, width = 10, height = 4)
+ggsave(paste0("../outputs/charts/", SelectedSpecies, "_YEAR_FLEET_COMP_PLOT_SELECTED_FLEETS.png"), YEAR_FLEET_COMP_PLOT_SELECTED_FLEETS, width = 10, height = 4)
+
+}
 
 # For Jimbo
 #write.xlsx(x = YEAR_FLEET_AREA_SPECIES_CATCH[YEAR>2011 & SPECIES_CODE == "YFT" & abs(DIFFERENCE)>0][order(FLEET_CODE, YEAR)],
