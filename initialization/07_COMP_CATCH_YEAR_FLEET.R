@@ -4,6 +4,8 @@ NC_FAO_YEAR_FLEET   = NC_FAO [FLEET_CODE != "NEI", .(FAO  = round(sum(CATCH, na.
 NC_IOTC_YEAR_FLEET  = NC_IOTC[FLEET_CODE != "NEI", .(IOTC = round(sum(CATCH, na.rm = TRUE))), keyby = .(YEAR, FLEET_CODE, FLEET)]
 
 YEAR_FLEET_CATCH = merge.data.table(NC_FAO_YEAR_FLEET, NC_IOTC_YEAR_FLEET, by = c("YEAR", "FLEET_CODE"), all = TRUE)
+YEAR_FLEET_CATCH[is.na(FAO),  FAO  := 0]
+YEAR_FLEET_CATCH[is.na(IOTC), IOTC := 0]
 YEAR_FLEET_CATCH[, DIFFERENCE := FAO - IOTC]
 YEAR_FLEET_CATCH[, DESCRIPTION := factor(fifelse(DIFFERENCE >= 0, "FAO>IOTC", "FAO<IOTC"), levels = c("FAO>IOTC", "FAO<IOTC"))]
 setorderv(YEAR_FLEET_CATCH, cols = "DIFFERENCE")
@@ -26,7 +28,7 @@ YEAR_FLEET_CATCH_COMP_PLOT =
         plot.margin = margin(.2, .3, .1, 0, "cm"),
         legend.position = "bottom", legend.title = element_blank()) +
   scale_y_continuous(labels = function(x) format(x, big.mark = ",")) +
-  facet_wrap(~FLEET_CODE) + #, scales = "free_y"
+  facet_wrap(~FLEET_CODE) +
   theme(strip.text = element_text(size = 10), strip.background = element_rect(fill = "white"))
 
 ggsave("../outputs/charts/YEAR_FLEET_CATCH_COMP_PLOT.png", YEAR_FLEET_CATCH_COMP_PLOT, width = 10, height = 6)
