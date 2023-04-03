@@ -1,10 +1,9 @@
-
 # READ ####
 
 # FishstatJ data 1950-2020 (accessed on 27 October 2021)
 # https://www.fao.org/fishery/statistics/software/fishstatj/en
 # "Country (Name)", "Country (ISO3 code)", "ASFIS species (Name)", "ASFIS species (3-alpha code)", "FAO major fishing area (Name)" "FAO major fishing area (Code)"
-FAO_RAW = fread("../inputs/data/FishStatJ_Export_IOTCSpecies.csv", fill = TRUE)
+FAO_RAW = fread("../inputs/data/FishStatJ_Export_IOTCSpecies.csv", fill = TRUE, encoding = "Latin-1")
 
 # Remove Totals and metadata
 FAO_RAW = FAO_RAW[-grep("Totals|FAO", FAO_RAW$`Country (Name)`)]
@@ -19,6 +18,7 @@ setnames(FAO_TABLE, old = c("Country (Name)", "Country (ISO3 code)", "ASFIS spec
 
 # FAO country list
 FAO_COUNTRY_LIST = unique(FAO_RAW[, .(`Country (Name)`, `Country (ISO3 code)`)])[order(`Country (Name)`)]
+
 # Split into 2 tables
 N_COUNTRIES   = nrow(FAO_COUNTRY_LIST)
 VECTOR_TABLE1 = 1:ceiling(N_COUNTRIES/2)
@@ -38,8 +38,9 @@ FAO_COUNTRY_LIST_FT =
   FAO_COUNTRY_LIST_2_COLUMNS %>%
   flextable() %>%
   fontsize(size = 8, part = "all") %>%
-  hline(border = fp_border(width = .8, style = "dashed")) %>%
-  vline(j = c(2), border = fp_border(width = 2)) %>%
+  #hline(border = fp_border(width = .8, style = "dashed")) %>%
+  vline(j = c(2), border = fp_border(width = 2)) %>% 
+  border_inner(border = fp_border(style = "dashed")) %>%
   border_outer(border = fp_border(width = 2)) %>%
   autofit()
 
@@ -51,8 +52,9 @@ FAO_SPECIES_LIST_FT =
   FAO_SPECIES_LIST %>%
   flextable() %>%
   fontsize(size = 8, part = "all") %>%
-  hline(border = fp_border(width = .8, style = "dashed")) %>%
-  vline(j = c(2), border = fp_border(width = 2)) %>%
+  #hline(border = fp_border(width = .8, style = "dashed")) %>%
+  #vline(j = c(2), border = fp_border(width = 2)) %>%
+  border_inner(border = fp_border(style = "dashed")) %>% 
   border_outer(border = fp_border(width = 2)) %>%
   autofit()
 
@@ -96,8 +98,9 @@ MAPPING_COUNTRY_FLEET_FT =
   MAPPING_COUNTRY_FLEET %>%
   flextable() %>%
   fontsize(size = 8, part = "all") %>%
-  hline(border = fp_border(width = .8, style = "dashed")) %>%
-  vline(j = c(2), border = fp_border(width = 2)) %>%
+  border_inner(border = fp_border(style = "dashed")) %>%
   border_outer(border = fp_border(width = 2)) %>%
+  #hline(border = fp_border(width = .8, style = "dashed")) %>%
+  #vline(j = c(2), border = fp_border(width = 2)) %>%
   autofit()
 
