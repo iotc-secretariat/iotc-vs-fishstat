@@ -2,7 +2,9 @@
 rm(list = ls())
 
 source("libs_constants.R")
-source("01_FAO_DATA.R")
+source("01.1_FAO_DATA_READING.R")
+source("01.2_FAO_DATA_CONSOLIDATION.R")
+source("01.3_FAO_DATA_DESCRIPTION.R")
 source("02_IOTC_DATA.R")
 source("03_COMP_CATCH_FLEET.R")
 source("04_COMP_CATCH_SPECIES.R")

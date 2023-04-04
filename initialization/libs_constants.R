@@ -4,7 +4,7 @@ if(!require(pacman)){
   suppressPackageStartupMessages(library(pacman,quietly = TRUE))
 }
 
-p_load(knitr, data.table, flextable, rmarkdown, bookdown, officer, magrittr, colorspace, tidyverse, openxlsx)
+p_load("knitr", "data.table", "flextable", "rmarkdown", "bookdown", "officer", "magrittr", "colorspace", "tidyverse", "openxlsx", "ritis", "taxa", "taxize", "dendextend", "ape")
 
 # Colors for barplots
 NC_DIFF_COLORS_FILL    = c("#374BE5FF", "#FB4A6AFF")
