@@ -50,8 +50,6 @@ NC_FAO[, ISSCAAP := 36]
 
 setnames(NC_FAO, old = c("SPECIES.ALPHA_3_CODE", "AREA.CODE", "VALUE"), new = c("SPECIES_CODE", "FISHING_GROUND_CODE", "CATCH"))
 
-# Filter on Indian Ocean
-NC_FAO_IO = NC_FAO[FISHING_GROUND %in% c("Indian Ocean, Western", "Indian Ocean, Eastern")]
 
 
 
