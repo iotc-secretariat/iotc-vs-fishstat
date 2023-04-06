@@ -48,5 +48,7 @@ Thumbs.db
 *.mov
 *.wmv
 
-.Rproj.user
-.Rhistory
+*.Rproj.user
+*.Rhistory
+
+
