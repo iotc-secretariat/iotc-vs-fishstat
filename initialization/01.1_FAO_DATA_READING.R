@@ -21,6 +21,7 @@
 ## FROM FISHSTAT RAW DATA ####
 
 # Source: https://www.fao.org/fishery/static/Data/Capture_2022.1.1.zip
+# Avaiable from here: https://www.fao.org/fishery/statistics-query/en/capture/capture_quantity
 if(!file.exists("../inputs/data/Capture_Quantity.csv")){
   temp = tempfile(tmpdir = "../inputs/data/")
   download.file("https://www.fao.org/fishery/static/Data/Capture_2022.1.1.zip", temp)
@@ -42,14 +43,5 @@ CL_UNITS = fread("../inputs/data/FSJ_UNIT.csv")[, .(MEASUREMENT_CODE = Code, MEA
 
 # Build the full data set with code lists
 CAPTURE = CAPTURE_RAW[CL_COUNTRIES, on = c("COUNTRY.UN_CODE" = "UN_CODE"), nomatch = 0][CL_SPECIES, on = c("SPECIES.ALPHA_3_CODE" = "SPECIES_CODE"), nomatch = 0][CL_AREAS, on = c("AREA.CODE" = "FISHING_GROUND_CODE"), nomatch = 0][CL_UNITS, on = c("MEASURE" = "MEASUREMENT_CODE"), nomatch = 0][, COUNTRY.UN_CODE := NULL]
-
-# Filter on tuna and tuna-like species
-# All measurements available as Q_tlw - Tonnes - Live weight
-NC_FAO = CAPTURE[ISSCAAP_NAME == "Tunas, bonitos, billfishes"]
-NC_FAO[, ISSCAAP := 36]
-
-setnames(NC_FAO, old = c("SPECIES.ALPHA_3_CODE", "AREA.CODE", "VALUE"), new = c("SPECIES_CODE", "FISHING_GROUND_CODE", "CATCH"))
-
-
 
 

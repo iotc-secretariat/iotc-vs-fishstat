@@ -1,3 +1,6 @@
+# Colors for barplots
+NC_DIFF_COLORS_FILL    = c("#374BE5FF", "#FB4A6AFF")
+NC_DIFF_COLORS_OUTLINE = c("#273AC0FF", "#D81C4AFF")
 
 # Do not consider NEI fleets
 NC_FAO_TOTAL_SPECIES   = NC_FAO [FLEET_CODE != "NEI", .(FAO  = round(sum(CATCH, na.rm = TRUE))), keyby = .(SPECIES_CODE)]
