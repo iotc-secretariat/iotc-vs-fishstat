@@ -17,7 +17,7 @@ COL_SPECIES_CATEGORIES = rbindlist(list(COL_SPECIES_CATEGORIES, COL_SPECIES_CATE
 SPECIES_COL    = data.table(SPECIES = c("BET", "SKJ", "YFT"), FILL = ggsci::pal_simpsons("springfield", alpha = 0.6)(3), OUTLINE = darken(pal_simpsons("springfield", alpha = 0.6)(3), 0.2))
 
 ## NERITICS ####
-
+color_table(unique_colors(8))
 
 
 
