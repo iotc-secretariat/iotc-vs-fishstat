@@ -2,9 +2,15 @@
 rm(list = ls())
 
 source("90_LIBS_CONSTANTS.R")
+
+# FAO global capture production data
 source("01.1_FAO_DATA_READING.R")
-source("01.2_FAO_DATA_CONSOLIDATION.R")
-source("01.3_FAO_DATA_DESCRIPTION.R")
+
+# ASFIS
+source("01.2_SPECIES_TAXONOMY_RETRIEVAL.R")
+source("01.3_SPECIES_TAXONOMY_DESCRIPTION.R")
+
+# Comparison with IOTC
 source("02_IOTC_DATA.R")
 source("03_COMP_CATCH_FLEET.R")
 source("04_COMP_CATCH_SPECIES.R")
