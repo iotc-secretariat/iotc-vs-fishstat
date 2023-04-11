@@ -29,4 +29,4 @@ FAO_TUNAS_BONITOS_BILLFISH[FISHING_GROUND %in% c("Pacific, Northwest", "Pacific,
 
 FAO_TUNAS_BONITOS_BILLFISH[FISHING_GROUND == "Mediterranean and Black Sea", `:=` (OCEAN = "Mediterranean and Black Sea", OCEAN_CODE = "MED-BS")]
 
-
+print("FAO catch for tuna and tuna-like species merged with ASFIS extended code list!")

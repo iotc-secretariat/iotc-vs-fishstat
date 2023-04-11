@@ -53,15 +53,17 @@ ASFIS_TUNAS[TRIBE == "Sardini", `:=` (SPECIES_CATEGORY_CODE = "BONITOS", SPECIES
 
 ASFIS_TUNAS[FAMILY %in% c("Istiophoridae", "Xiphiidae"), `:=` (SPECIES_CATEGORY_CODE = "BILLFISH", SPECIES_CATEGORY = "Billfish species")]
 
-ASFIS_TUNAS[SPECIES_SCIENTIFIC %in% c("Thunnus albacares", "Thunnus obesus", "Katsuwonus pelamis"), `:=` (SPECIES_CATEGORY_CODE = "TROPICAL", SPECIES_CATEGORY = "Tropical tuna species")]
+ASFIS_TUNAS[SPECIES_SCIENTIFIC %in% c("Thunnus albacares", "Thunnus obesus", "Katsuwonus pelamis", "Thunnus atlanticus"), `:=` (SPECIES_CATEGORY_CODE = "TROPICAL", SPECIES_CATEGORY = "Tropical tuna species")]
 
 ASFIS_TUNAS[SPECIES_SCIENTIFIC %in% c("Thunnus alalunga", "Thunnus orientalis", "Thunnus thynnus", "Thunnus maccoyii", "Allothunnus fallai"), `:=` (SPECIES_CATEGORY_CODE = "TEMPERATE", SPECIES_CATEGORY = "Temperate tuna species")]
 
-ASFIS_TUNAS[SPECIES_SCIENTIFIC %in% c("Auxis thazard", "Auxis rochei", "Auxis spp", "Euthynnus alletteratus", "Euthynnus lineatus", "Euthynnus affinis", "Euthynnus spp", "Thunnus tonggol", "Thunnus atlanticus"), `:=` (SPECIES_CATEGORY_CODE = "NERITIC", SPECIES_CATEGORY = "Neritic tuna species")]
+ASFIS_TUNAS[SPECIES_SCIENTIFIC %in% c("Auxis thazard", "Auxis rochei", "Auxis spp", "Euthynnus alletteratus", "Euthynnus lineatus", "Euthynnus affinis", "Euthynnus spp", "Thunnus tonggol"), `:=` (SPECIES_CATEGORY_CODE = "NERITIC", SPECIES_CATEGORY = "Neritic tuna species")]
 
 ASFIS_TUNAS[SPECIES_SCIENTIFIC %in% c("Thunnus spp", "Thunnini"), `:=` (SPECIES_CATEGORY_CODE = "TUNAS_NEI", SPECIES_CATEGORY = "Tuna species NEI")]
 
 ASFIS_TUNAS[SPECIES_SCIENTIFIC %in% c("Scombroidei", "Gasterochisma melampus"), `:=` (SPECIES_CATEGORY_CODE = "SCOMBROIDEI_NEI", SPECIES_CATEGORY = "Scombroidei species NEI")]
 
+# Save ASFIS tuna and tuna-like extended code list
+write.xlsx(ASFIS_TUNAS, "../outputs/ASFIS_TUNAS_EXTENDED_CODE_LIST.xlsx")
 
 print("Taxonomic information on tuna and tuna-like species extracted!")

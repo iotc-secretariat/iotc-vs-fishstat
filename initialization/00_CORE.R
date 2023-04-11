@@ -1,14 +1,23 @@
 # Clears the environment
 rm(list = ls())
 
-source("90_LIBS_CONSTANTS.R")
+source("90_LIBS_EXTERNAL.R")
+source("91_LIBS_IOTC.R")
 
 # FAO global capture production data
 source("01.1_FAO_DATA_READING.R")
 
 # ASFIS
 source("01.2_SPECIES_TAXONOMY_RETRIEVAL.R")
-source("01.3_SPECIES_TAXONOMY_DESCRIPTION.R")
+#source("01.3_SPECIES_TAXONOMY_DESCRIPTION.R")
+source("01.4_MERGING_FAO_CATCH_DATA_WITH_ASFIS.R")
+
+# Define color palettes
+source("92_COLOR_PALETTES.R")
+
+# Catch trends
+
+
 
 # Comparison with IOTC
 source("02_IOTC_DATA.R")
