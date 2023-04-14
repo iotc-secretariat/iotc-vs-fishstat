@@ -64,6 +64,6 @@ ASFIS_TUNAS[SPECIES_SCIENTIFIC %in% c("Thunnus spp", "Thunnini"), `:=` (SPECIES_
 ASFIS_TUNAS[SPECIES_SCIENTIFIC %in% c("Scombroidei", "Gasterochisma melampus"), `:=` (SPECIES_CATEGORY_CODE = "SCOMBROIDEI_NEI", SPECIES_CATEGORY = "Scombroidei species NEI")]
 
 # Save ASFIS tuna and tuna-like extended code list
-write.xlsx(ASFIS_TUNAS, "../outputs/ASFIS_TUNAS_EXTENDED_CODE_LIST.xlsx")
+write.csv(ASFIS_TUNAS, "../outputs/data/ASFIS_TUNAS_EXTENDED_CODE_LIST.csv", row.names = FALSE)
 
 print("Taxonomic information on tuna and tuna-like species extracted!")

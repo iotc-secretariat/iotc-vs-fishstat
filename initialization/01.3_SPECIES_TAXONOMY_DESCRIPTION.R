@@ -19,7 +19,7 @@ NERITIC_DIST = NERITIC_TREE$distmat
 TUNA_DEND = TUNA_DIST %>% hclust %>% as.dendrogram
 NERITIC_DEND = NERITIC_DIST %>% hclust %>% as.dendrogram
 
-# Define colors and symbols for segments and labels
+# Define colours and symbols for segments and labels
 nodePar <- list(lab.cex = 0.6, pch = c(NA, 19), cex = 0.7, col = "blue")
 
 plot(TUNA_DEND,  xlab = "Height", nodePar = nodePar, edgePar = list(col = 2:3, lwd = 2:1), horiz = TRUE)
