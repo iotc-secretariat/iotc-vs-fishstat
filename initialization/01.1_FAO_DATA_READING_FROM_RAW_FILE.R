@@ -1,6 +1,6 @@
 # FROM FISHSTAT RAW DATA ####
 
-# Source: https://www.fao.org/fishery/static/Data/Capture_2022.1.1.zip
+# Source: https://www.fao.org/fishery/static/Data/Capture_2023.1.1.zip
 # Avaiable from here: https://www.fao.org/fishery/statistics-query/en/capture/capture_quantity
 if(!file.exists("../inputs/data/Capture_Quantity.csv")){
   temp = tempfile(tmpdir = "../inputs/data/")
